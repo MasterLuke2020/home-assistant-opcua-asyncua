@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.4 — release candidate (2026-10-20)
+## 1.0.4 — 2026-10-20
 
 - Repackaged the existing integration into a HACS-compatible repository layout; no functionality added.
 - Serialized simultaneous momentary button writes targeting the same OPC UA Node ID.
@@ -24,4 +24,4 @@
 - Live write verification (2026-10-20): operator confirmed both switch TRUE/FALSE and 500-ms button behavior worked against explicitly approved edge-triggered WAGO office-light input using isolated HA test port 8124. This was a real control input, not an inert test variable. The private PLC node identifier is intentionally omitted from public documentation.
 - Still pending before first release: final review of repository contents, release version and metadata, and approval.
 
-**Release status:** The 1.0.4 manifest is prepared on `develop`. No GitHub Release or production deployment has been performed yet. Final GitHub Actions, branch promotion, and release publication are still required.
+**Upgrade note:** Back up the current `asyncua` installation and YAML configuration before upgrading an existing production setup. Test the new version in a separate Home Assistant instance first.

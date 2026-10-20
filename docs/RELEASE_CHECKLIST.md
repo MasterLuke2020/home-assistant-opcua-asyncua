@@ -21,7 +21,7 @@
 - [x] Offline-regression, HACS action, and Hassfest all pass on `develop`
 - [x] Resolve HACS/Hassfest validation errors
 - [x] Add local integration icon at `custom_components/asyncua/brand/icon.png`
-- [x] Bump manifest to `1.0.4` and update changelog on `develop` (release candidate; awaiting GitHub validation)
+- [x] Bump manifest to `1.0.4`, update changelog, and pass validation on `develop` and `main` (pre-release commit)
 - [ ] Tag and publish a full GitHub Release (not only a tag)
 - [ ] Submit default repository PR to `hacs/default` only after checks pass
 

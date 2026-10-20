@@ -20,7 +20,7 @@ Do not copy files into the production Home Assistant container and do not restar
 
 ## Validation status as of 2026-10-20
 
-- Offline pytest regression suite: PASS (9 tests after targeted reconnect fix; re-run on the 1.0.4 release candidate via GitHub Actions pending)
+- Offline pytest regression suite: PASS (9 tests, including targeted reconnect regressions, on the 1.0.4 candidate through GitHub Actions)
 - Manifest JSON and Python syntax: PASS
 - Separate Home Assistant Docker instance with YAML configuration: PASS
 - Read-only WAGO PLC temperature: PASS (plausible value)
