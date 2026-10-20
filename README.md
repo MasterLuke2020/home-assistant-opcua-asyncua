@@ -2,7 +2,7 @@
 
 Custom integration for connecting Home Assistant to OPC UA compatible PLCs, originally developed and tested with a WAGO PLC.
 
-> **Development / staging build.** This repository layout is prepared for HACS. The proposed GitHub repository, a release, full Home Assistant runtime tests, and PLC verification are **not yet completed**. **Do not replace a working production integration with this staging package.**
+> **Pre-release development build.** The GitHub repository is public and automated validation passes. An isolated Home Assistant instance successfully connected to a WAGO PLC, read a plausible temperature value, and received automatic OPC UA subscription updates. PLC connection-loss/recovery, safe writes, and installation through HACS remain to be tested. **Do not replace a working production integration with this development build.**
 
 ## Existing features (unchanged)
 
@@ -24,9 +24,9 @@ No features have been added in this preparation. The test candidate includes thr
 
 No specific minimum Home Assistant version is claimed until the HA runtime tests have passed.
 
-## Installation (after publishing to GitHub)
+## Installation (after the first tagged GitHub release)
 
-**Via HACS:** Open HACS, add the new GitHub URL as a **custom repository** of category **Integration**, install **AsyncUA OPC-UA**, then restart Home Assistant. Once listed as a HACS default repository, manual addition will no longer be necessary.
+**Via HACS (after release and test):** Open HACS, add `https://github.com/MasterLuke2020/home-assistant-opcua-asyncua` as a **custom repository** of category **Integration**, install **AsyncUA OPC-UA**, and restart Home Assistant. Inclusion in the default HACS catalog requires a separate submission and approval.
 
 **Manually:** Copy `custom_components/asyncua/` to `<HA_CONFIG>/custom_components/asyncua/` and restart Home Assistant.
 
@@ -98,12 +98,12 @@ python -m pip install pytest
 python -m pytest tests -q
 ```
 
-These tests use mock classes to exercise actual coordinator and button code; they are not a substitute for real Home Assistant and OPC UA server tests. See `docs/TESTPLAN.md`.
+These tests use mock classes to exercise actual coordinator and button code. The separate Home Assistant/WAGO read-only startup and live subscription tests have also passed; reconnect, write, and HACS installation tests are still outstanding. See `docs/TESTPLAN.md`.
 
 ## Problems and contributing
 
-Once the new GitHub repository is created, use the repository Issues tab to report problems. Please do not include passwords, tokens, internal IP addresses, or sensitive PLC configuration in public issues.
+Use [GitHub Issues](https://github.com/MasterLuke2020/home-assistant-opcua-asyncua/issues) to report problems. Please do not include passwords, tokens, internal IP addresses, or sensitive PLC configuration in public issues.
 
 ## License
 
-The proposed MIT license text is in `LICENSE.DRAFT`. Rename it to `LICENSE` only after explicit approval by the repository owner.
+This project is distributed under the [MIT License](LICENSE).

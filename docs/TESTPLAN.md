@@ -22,9 +22,13 @@ Do not copy files into the production Home Assistant container and do not restar
 
 - Offline pytest regression suite: PASS (6 tests)
 - Manifest JSON and Python syntax: PASS
-- Full HA start: NOT RUN (not available in current environment)
-- Real PLC: NOT RUN
-- HACS Action and hassfest on GitHub: NOT RUN (repository not created)
+- Separate Home Assistant Docker instance with YAML configuration: PASS
+- Read-only WAGO PLC temperature: PASS (plausible value)
+- Automatic subscription updates from WAGO: PASS (observed without manual refresh)
+- GitHub Actions: regression tests, Hassfest, and HACS validation: PASS on `develop`
+- Controlled connection interruption and reconnection: NOT YET TESTED
+- Safe non-actuating PLC write test: NOT YET TESTED
+- Installation through HACS custom repository: NOT YET TESTED
 
 ## Isolated Docker instance (example; manual configuration required)
 

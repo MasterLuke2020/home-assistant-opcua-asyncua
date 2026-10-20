@@ -1,27 +1,28 @@
-# Release checklist — NOT YET APPROVED
+# Release checklist — pre-release / approval pending
 
-## Before GitHub creation
-- [ ] Confirm new repository owner/name. Proposed: `MasterLuke2020/home-assistant-opcua-asyncua`
-- [ ] Approve publication license. Proposed MIT; review `LICENSE.DRAFT`, then rename it to `LICENSE` if approved
-- [ ] Ensure no passwords, tokens, local production config, or private IP addresses are included in tracked files
-- [ ] Set repository description, GitHub topics, and enable Issues
-- [ ] Keep existing integration domain `asyncua` (YAML and Entity-ID compatibility)
+## Repository and licensing
+- [x] Public repository: `MasterLuke2020/home-assistant-opcua-asyncua`
+- [x] Owner approved MIT license; license is now `LICENSE`
+- [ ] Final review for secrets, tokens, sensitive examples, and publication metadata
+- [x] Repository description, valid GitHub topics, and Issues in place
+- [x] Existing integration domain `asyncua` preserved (YAML and Entity-ID compatibility)
 
 ## Runtime verification
-- [ ] Start completely separate HA Docker container with its own writable config and port
-- [ ] Connect read-only test variables on the PLC; verify startup, subscriptions, and reconnect
+- [x] Start completely separate HA Docker container with its own writable config and port
+- [x] Verify startup, initial real PLC temperature value, and automatic subscription updates
+- [ ] Verify reconnect after controlled, production-safe link interruption
 - [ ] Test safe non-actuating BOOL variable if write tests are required
 - [ ] Confirm no logger errors or entity registry conflicts
 - [ ] Verify HACS installation into a separate HA test container
 
 ## GitHub verification
-- [ ] Create separate `develop` branch for further changes
-- [ ] Push source and documentation
-- [ ] Let offline-regression, HACS action, and hassfest pass
-- [ ] Resolve any issues HACS/hassfest reports
-- [ ] Add integration icon (required for HACS default listing; use accepted Home Assistant branding process)
+- [x] Create separate `develop` branch for further changes
+- [x] Push source and documentation
+- [x] Offline-regression, HACS action, and Hassfest all pass on `develop`
+- [x] Resolve HACS/Hassfest validation errors
+- [x] Add local integration icon at `custom_components/asyncua/brand/icon.png`
 - [ ] Once verified, bump manifest to a new patch release (proposed `1.0.4`) and update changelog
 - [ ] Tag and publish a full GitHub Release (not only a tag)
 - [ ] Submit default repository PR to `hacs/default` only after checks pass
 
-**No production deployment, public repository or release has been performed by this staging package.**
+**As of 2026-10-20: the repository is public and the read-only PLC test passed; no production deployment or GitHub Release has been performed.**
