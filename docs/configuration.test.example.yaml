@@ -1,0 +1,19 @@
+# Safe, separate test HA config (copy into a separate /config/configuration.yaml)
+# Replace the placeholder URL and Node ID with a real, READ-ONLY PLC test node.
+homeassistant:
+  name: OPC-UA Test
+logger:
+  default: warning
+  logs:
+    custom_components.asyncua: info
+asyncua:
+  - name: wago_test
+    url: "opc.tcp://192.0.2.10:4840"
+    scan_interval: 30
+sensor:
+  - platform: asyncua
+    nodes:
+      - name: "Read-only test value"
+        unique_id: opcua_readonly_test
+        hub: wago_test
+        nodeid: "ns=4;s=|var|Example.ReadOnlyTest"

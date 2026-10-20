@@ -1,0 +1,13 @@
+# Copy this file as compose.yaml into a separate test folder on the HA server.
+# Use only a separate ./config directory. NO production Home Assistant volumes.
+services:
+  ha-opcua-test:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: ha-opcua-test
+    restart: "no"
+    ports:
+      - "8124:8123"
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=Europe/Vienna

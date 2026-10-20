@@ -1,0 +1,12 @@
+{
+  "domain": "asyncua",
+  "name": "AsyncUA OPC-UA",
+  "version": "1.0.3",
+  "documentation": "https://github.com/MasterLuke2020/home-assistant-opcua-asyncua#readme",
+  "issue_tracker": "https://github.com/MasterLuke2020/home-assistant-opcua-asyncua/issues",
+  "codeowners": ["@MasterLuke2020"],
+  "dependencies": [],
+  "requirements": ["asyncua==1.2b2"],
+  "iot_class": "local_push",
+  "integration_type": "hub"
+}
