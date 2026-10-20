@@ -110,6 +110,10 @@ class AsyncuaCoordinator(DataUpdateCoordinator):
         self._subscription_bootstrap_task: asyncio.Task | None = None
         self._polling_task: asyncio.Task | None = None
         self._subscription_watchdog_task: asyncio.Task | None = None
+        self._reconnect_task: asyncio.Task | None = None
+        # Incremented on each successful new OPC-UA connection. Pending
+        # reconnect callers can then tell if another caller already recovered.
+        self._connection_generation = 0
 
         # bewusst kurz: lieber schnell reconnecten als Home Assistant minutenlang blockieren
         self._request_timeout = 5.0
@@ -194,6 +198,7 @@ class AsyncuaCoordinator(DataUpdateCoordinator):
             "_subscription_bootstrap_task",
             "_polling_task",
             "_subscription_watchdog_task",
+            "_reconnect_task",
         ):
             task = getattr(self, task_name)
             if task is not None:
@@ -218,6 +223,7 @@ class AsyncuaCoordinator(DataUpdateCoordinator):
 
             self.client = client
             self._connected = True
+            self._connection_generation += 1
 
     async def async_disconnect(self) -> None:
         async with self._connect_lock:
@@ -247,19 +253,47 @@ class AsyncuaCoordinator(DataUpdateCoordinator):
         if self._stopping:
             return
 
+        previous_generation = self._connection_generation
         async with self._reconnect_lock:
+            if self._stopping:
+                return
+
+            # A concurrent reconnect may already have successfully replaced the
+            # failed connection. Do not tear down that newly recovered session.
+            if self.connected and self._connection_generation != previous_generation:
+                if rebuild_subscriptions and self.subscription is None:
+                    await self.start_subscription()
+                return
+
             _LOGGER.warning("Reconnecting OPC-UA hub %s", self.name)
 
-            await self.async_disconnect()
-            await self.async_connect()
+            # Serialize teardown with subscription creation/subscription of nodes.
+            # Otherwise another worker can close the new client in the middle of
+            # subscribe_data_change(), resulting in "Connection is not open".
+            async with self._subscription_lock:
+                await self.async_disconnect()
+                await self.async_connect()
 
             if rebuild_subscriptions:
                 await self.start_subscription()
 
+    async def _background_reconnect(self) -> None:
+        """Handle subscription-status-triggered reconnect errors locally."""
+        try:
+            await self.async_reconnect(rebuild_subscriptions=True)
+        except asyncio.CancelledError:
+            raise
+        except Exception as err:
+            _LOGGER.warning("Background OPC-UA reconnect failed for hub %s: %s", self.name, err)
+
     def _schedule_reconnect(self) -> None:
         if self._stopping:
             return
-        self._hass.async_create_task(self.async_reconnect(rebuild_subscriptions=True))
+        # A subscription may emit several status notifications for one outage.
+        # One worker is enough; keepalive/watchdog can retry after it completes.
+        if self._reconnect_task is not None and not self._reconnect_task.done():
+            return
+        self._reconnect_task = self._hass.async_create_task(self._background_reconnect())
 
     def _get_node(self, nodeid: str):
         if self.client is None:

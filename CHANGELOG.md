@@ -17,6 +17,9 @@
 - GitHub Actions: regression tests, Hassfest, and HACS validation passed on `develop`.
 - Installation via a HACS custom repository in a separate Home Assistant container: PASS (download, integration load, live WAGO read and subscription updates).
 - HACS logged an initial zipball download failure but successfully downloaded the individual integration files and completed installation.
-- Still pending before first release: safe write tests and a controlled connection-loss/recovery test.
+- Controlled 75-second network isolation on the HACS test container exposed overlapping reconnect attempts, an unhandled background task exception, and a subscription error ("Connection is not open"). Recovery of automatic sensor updates was not yet confirmed.
+- Implemented a targeted reconnect fix on `develop`: background errors are handled, duplicate status-triggered reconnect tasks are coalesced, stale pending reconnects no longer tear down a fresh connection, and reconnect teardown waits for ongoing subscription setup.
+- Expanded offline regression checks to 9 tests; all pass locally.
+- Still pending before first release: retest the controlled connection-loss/recovery scenario with this fix and verify safe writes.
 
 **Note:** No release or version bump has been published. Keep manifest version `1.0.3` until the remaining release checks are completed; a patch version can then be assigned.

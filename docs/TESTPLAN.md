@@ -20,13 +20,13 @@ Do not copy files into the production Home Assistant container and do not restar
 
 ## Validation status as of 2026-10-20
 
-- Offline pytest regression suite: PASS (6 tests)
+- Offline pytest regression suite: PASS (9 tests after targeted reconnect fix)
 - Manifest JSON and Python syntax: PASS
 - Separate Home Assistant Docker instance with YAML configuration: PASS
 - Read-only WAGO PLC temperature: PASS (plausible value)
 - Automatic subscription updates from WAGO: PASS (observed without manual refresh)
 - GitHub Actions: regression tests, Hassfest, and HACS validation: PASS on `develop`
-- Controlled connection interruption and reconnection: NOT YET TESTED
+- Controlled connection interruption/reconnection: INITIAL TEST EXPOSED A BUG (network-down exceptions handled inconsistently; overlapping reconnects disrupted subscription re-registration). Targeted fix prepared on `develop`; full recovery retest still pending.
 - Safe non-actuating PLC write test: NOT YET TESTED
 - Installation through HACS custom repository: PASS (isolated HA instance on port 8125; manifest version 1.0.3; live WAGO temperature and subscription updates)
 - Observation: HACS initially failed to fetch a zipball, fell back to individual files, then completed the installation

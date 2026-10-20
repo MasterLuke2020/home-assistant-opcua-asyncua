@@ -193,3 +193,119 @@ def test_manifest_schema_basics():
 def test_all_python_sources_compile():
     for file in CODE.glob("*.py"):
         compile(file.read_text(encoding="utf-8"), str(file), "exec")
+
+
+def test_subscription_status_reconnect_is_coalesced_and_catches_errors():
+    async def scenario():
+        ha = FakeHA()
+        c = AsyncuaCoordinator(ha, "PLC", "opc.tcp://example.invalid:4840", 5)
+        started = asyncio.Event()
+        allow_failure = asyncio.Event()
+        attempts = 0
+
+        async def unavailable(*, rebuild_subscriptions):
+            nonlocal attempts
+            attempts += 1
+            started.set()
+            await allow_failure.wait()
+            raise OSError(101, "Network unreachable")
+
+        c.async_reconnect = unavailable
+        c._schedule_reconnect()
+        await started.wait()
+        c._schedule_reconnect()
+        c._schedule_reconnect()
+        assert len(ha.tasks) == 1
+        allow_failure.set()
+        await asyncio.gather(*ha.tasks)
+        assert attempts == 1
+        assert ha.tasks[0].exception() is None  # no unhandled asyncio exception
+
+        # A later status notification can trigger a fresh attempt.
+        c._schedule_reconnect()
+        await asyncio.gather(*ha.tasks)
+        assert attempts == 2
+    asyncio.run(scenario())
+
+
+def test_concurrent_reconnect_requests_keep_recovered_connection():
+    async def scenario():
+        c = AsyncuaCoordinator(FakeHA(), "PLC", "opc.tcp://example.invalid:4840", 5)
+        c._connected = True
+        c.client = object()
+        disconnects = 0
+        connects = 0
+        subscriptions = 0
+
+        async def disconnect():
+            nonlocal disconnects
+            disconnects += 1
+            c._connected = False
+            c.client = None
+            c.subscription = None
+            await asyncio.sleep(0.005)
+
+        async def connect():
+            nonlocal connects
+            connects += 1
+            await asyncio.sleep(0.005)
+            c.client = object()
+            c._connected = True
+            c._connection_generation += 1
+
+        async def subscribe():
+            nonlocal subscriptions
+            subscriptions += 1
+            c.subscription = object()
+            await asyncio.sleep(0.001)
+
+        c.async_disconnect = disconnect
+        c.async_connect = connect
+        c.start_subscription = subscribe
+        await asyncio.gather(*(c.async_reconnect() for _ in range(4)))
+        assert disconnects == 1
+        assert connects == 1
+        assert subscriptions == 1
+        assert c.connected
+    asyncio.run(scenario())
+
+
+def test_reconnect_waits_for_active_subscription_setup():
+    async def scenario():
+        c = AsyncuaCoordinator(FakeHA(), "PLC", "opc.tcp://example.invalid:4840", 5)
+        c.client = object()
+        c._connected = True
+        subscribe_entered = asyncio.Event()
+        finish_subscribe = asyncio.Event()
+        events = []
+
+        async def subscribe():
+            async with c._subscription_lock:
+                events.append("subscribe-start")
+                subscribe_entered.set()
+                await finish_subscribe.wait()
+                events.append("subscribe-finished")
+
+        async def disconnect():
+            events.append("disconnect")
+            c.client = None
+            c._connected = False
+
+        async def connect():
+            events.append("connect")
+            c.client = object()
+            c._connected = True
+            c._connection_generation += 1
+
+        c.start_subscription = subscribe
+        c.async_disconnect = disconnect
+        c.async_connect = connect
+        active_sub = asyncio.create_task(subscribe())
+        await subscribe_entered.wait()
+        recovery = asyncio.create_task(c.async_reconnect(rebuild_subscriptions=False))
+        await asyncio.sleep(0)
+        assert events == ["subscribe-start"]
+        finish_subscribe.set()
+        await asyncio.gather(active_sub, recovery)
+        assert events == ["subscribe-start", "subscribe-finished", "disconnect", "connect"]
+    asyncio.run(scenario())

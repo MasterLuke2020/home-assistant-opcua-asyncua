@@ -10,7 +10,7 @@
 ## Runtime verification
 - [x] Start completely separate HA Docker container with its own writable config and port
 - [x] Verify startup, initial real PLC temperature value, and automatic subscription updates
-- [ ] Verify reconnect after controlled, production-safe link interruption
+- [ ] Verify reconnect after controlled, production-safe link interruption (first test exposed race; fix on `develop`, retest required)
 - [ ] Test safe non-actuating BOOL variable if write tests are required
 - [ ] Confirm no logger errors or entity registry conflicts
 - [x] Verify HACS installation into a separate HA test container with live read-only WAGO temperature and subscription updates
