@@ -16,7 +16,7 @@ if [ "$target" = "/srv/containers/homeassistant" ] || [ "$target" = "/srv/contai
   exit 1
 fi
 if [ ! -f "$repo_root/custom_components/asyncua/manifest.json" ]; then
-  echo "ABORT: Run this script from the extracted OPCUA_HACS_Staging.zip package." >&2
+  echo "ABORT: Run this script from the integration repository root." >&2
   exit 1
 fi
 

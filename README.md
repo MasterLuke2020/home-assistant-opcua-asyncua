@@ -2,7 +2,7 @@
 
 Custom integration for connecting Home Assistant to OPC UA compatible PLCs, originally developed and tested with a WAGO PLC.
 
-> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery has also passed after a targeted reconnect fix; live switch/button writes have also been confirmed on an operator-approved edge-triggered WAGO control input. **Do not replace a working production integration with this development build.**
+> **Release candidate 1.0.4 (not yet published).** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery has also passed after a targeted reconnect fix; live switch/button writes have also been confirmed on an operator-approved edge-triggered WAGO control input. **Do not replace a working production integration with this development build.**
 
 ## Existing features (unchanged)
 
@@ -22,7 +22,7 @@ No features have been added in this preparation. The test candidate includes nar
 - Valid OPC UA Node IDs and read/write permissions
 - Python package `asyncua==1.2b2` (installed by Home Assistant as defined in the manifest)
 
-No specific minimum Home Assistant version is claimed until the HA runtime tests have passed.
+Tested with isolated Home Assistant Docker instances using the then-current stable image on 2026-10-20. A minimum compatible Home Assistant version has not been established; older versions have not been verified.
 
 ## Installation
 

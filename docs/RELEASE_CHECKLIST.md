@@ -3,7 +3,7 @@
 ## Repository and licensing
 - [x] Public repository: `MasterLuke2020/home-assistant-opcua-asyncua`
 - [x] Owner approved MIT license; license is now `LICENSE`
-- [ ] Final review for secrets, tokens, sensitive examples, and publication metadata
+- [x] Reviewed 19 public text files for private host/node identifiers and credential patterns; no matching sensitive literals found (2026-10-20)
 - [x] Repository description, valid GitHub topics, and Issues in place
 - [x] Existing integration domain `asyncua` preserved (YAML and Entity-ID compatibility)
 
@@ -21,8 +21,8 @@
 - [x] Offline-regression, HACS action, and Hassfest all pass on `develop`
 - [x] Resolve HACS/Hassfest validation errors
 - [x] Add local integration icon at `custom_components/asyncua/brand/icon.png`
-- [ ] Once verified, bump manifest to a new patch release (proposed `1.0.4`) and update changelog
+- [x] Bump manifest to `1.0.4` and update changelog on `develop` (release candidate; awaiting GitHub validation)
 - [ ] Tag and publish a full GitHub Release (not only a tag)
 - [ ] Submit default repository PR to `hacs/default` only after checks pass
 
-**As of 2026-10-20: HACS installation, live WAGO subscription updates, and the corrected-version container-only network-recovery test passed. Final release review and approval are pending; no production deployment or GitHub Release has been performed.**
+**As of 2026-10-20: HACS installation, live WAGO subscription updates, and the corrected-version container-only network-recovery test passed. Final release validation, promotion to `main`, and GitHub Release are pending; no production deployment has been performed.**
