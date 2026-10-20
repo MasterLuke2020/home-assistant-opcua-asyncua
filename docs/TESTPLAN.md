@@ -28,7 +28,8 @@ Do not copy files into the production Home Assistant container and do not restar
 - GitHub Actions: regression tests, Hassfest, and HACS validation: PASS on `develop`
 - Controlled connection interruption and reconnection: NOT YET TESTED
 - Safe non-actuating PLC write test: NOT YET TESTED
-- Installation through HACS custom repository: NOT YET TESTED
+- Installation through HACS custom repository: PASS (isolated HA instance on port 8125; manifest version 1.0.3; live WAGO temperature and subscription updates)
+- Observation: HACS initially failed to fetch a zipball, fell back to individual files, then completed the installation
 
 ## Isolated Docker instance (example; manual configuration required)
 

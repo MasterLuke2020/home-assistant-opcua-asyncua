@@ -15,6 +15,8 @@
 - Isolated Home Assistant container: started successfully with the custom integration.
 - Real WAGO PLC: OPC UA connection, plausible temperature readout, and automatic subscription updates verified.
 - GitHub Actions: regression tests, Hassfest, and HACS validation passed on `develop`.
-- Still pending before first release: safe write tests, connection-loss/recovery test, and actual HACS installation verification.
+- Installation via a HACS custom repository in a separate Home Assistant container: PASS (download, integration load, live WAGO read and subscription updates).
+- HACS logged an initial zipball download failure but successfully downloaded the individual integration files and completed installation.
+- Still pending before first release: safe write tests and a controlled connection-loss/recovery test.
 
 **Note:** No release or version bump has been published. Keep manifest version `1.0.3` until the remaining release checks are completed; a patch version can then be assigned.

@@ -2,7 +2,7 @@
 
 Custom integration for connecting Home Assistant to OPC UA compatible PLCs, originally developed and tested with a WAGO PLC.
 
-> **Pre-release development build.** The GitHub repository is public and automated validation passes. An isolated Home Assistant instance successfully connected to a WAGO PLC, read a plausible temperature value, and received automatic OPC UA subscription updates. PLC connection-loss/recovery, safe writes, and installation through HACS remain to be tested. **Do not replace a working production integration with this development build.**
+> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery and safe writes remain unverified. **Do not replace a working production integration with this development build.**
 
 ## Existing features (unchanged)
 
@@ -98,7 +98,7 @@ python -m pip install pytest
 python -m pytest tests -q
 ```
 
-These tests use mock classes to exercise actual coordinator and button code. The separate Home Assistant/WAGO read-only startup and live subscription tests have also passed; reconnect, write, and HACS installation tests are still outstanding. See `docs/TESTPLAN.md`.
+These tests use mock classes to exercise actual coordinator and button code. Read-only WAGO communication and automatic subscription updates passed in two separate Home Assistant containers, including one installation through HACS as a custom repository. Controlled reconnect and safe write tests are still outstanding. See `docs/TESTPLAN.md`.
 
 ## Problems and contributing
 

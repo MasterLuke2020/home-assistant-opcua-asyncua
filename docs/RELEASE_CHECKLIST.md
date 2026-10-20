@@ -13,7 +13,7 @@
 - [ ] Verify reconnect after controlled, production-safe link interruption
 - [ ] Test safe non-actuating BOOL variable if write tests are required
 - [ ] Confirm no logger errors or entity registry conflicts
-- [ ] Verify HACS installation into a separate HA test container
+- [x] Verify HACS installation into a separate HA test container with live read-only WAGO temperature and subscription updates
 
 ## GitHub verification
 - [x] Create separate `develop` branch for further changes
@@ -25,4 +25,4 @@
 - [ ] Tag and publish a full GitHub Release (not only a tag)
 - [ ] Submit default repository PR to `hacs/default` only after checks pass
 
-**As of 2026-10-20: the repository is public and the read-only PLC test passed; no production deployment or GitHub Release has been performed.**
+**As of 2026-10-20: the repository is public, HACS installation and live read-only PLC subscription checks passed in an isolated test container; no production deployment or GitHub Release has been performed.**
