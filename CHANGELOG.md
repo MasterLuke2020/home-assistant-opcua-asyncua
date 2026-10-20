@@ -21,6 +21,7 @@
 - Implemented a targeted reconnect fix on `develop`: background errors are handled, duplicate status-triggered reconnect tasks are coalesced, stale pending reconnects no longer tear down a fresh connection, and reconnect teardown waits for ongoing subscription setup.
 - Expanded offline regression checks to 9 tests; all pass locally.
 - Corrected-version field retest on isolated HA instance (2026-10-20): 75-second Docker network isolation, automatically handled temporary network errors, self-reconnection, subscription re-creation, and resumed live WAGO temperature updates all PASS without restarting the container. The prior unhandled background-task exception and post-reconnect subscribe race were not observed in the retest.
-- Still pending before first release: verify safe writes against a dedicated non-actuating BOOL test node; complete final release review.
+- Live write verification (2026-10-20): operator confirmed both switch TRUE/FALSE and 500-ms button behavior worked against explicitly approved edge-triggered WAGO office-light input using isolated HA test port 8124. This was a real control input, not an inert test variable. The private PLC node identifier is intentionally omitted from public documentation.
+- Still pending before first release: final review of repository contents, release version and metadata, and approval.
 
 **Note:** No release or version bump has been published. Keep manifest version `1.0.3` until the remaining release checks are completed; a patch version can then be assigned.

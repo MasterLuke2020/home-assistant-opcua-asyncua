@@ -2,7 +2,7 @@
 
 Custom integration for connecting Home Assistant to OPC UA compatible PLCs, originally developed and tested with a WAGO PLC.
 
-> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery has also passed after a targeted reconnect fix; safe writes remain unverified. **Do not replace a working production integration with this development build.**
+> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery has also passed after a targeted reconnect fix; live switch/button writes have also been confirmed on an operator-approved edge-triggered WAGO control input. **Do not replace a working production integration with this development build.**
 
 ## Existing features (unchanged)
 
@@ -98,7 +98,7 @@ python -m pip install pytest
 python -m pytest tests -q
 ```
 
-These tests use mock classes to exercise actual coordinator and button code. Read-only WAGO communication and automatic subscription updates passed in two separate Home Assistant containers, including one installation through HACS as a custom repository. A controlled 75-second loss-of-network test, automatic reconnection, and resumed subscription updates passed with the targeted fix. Safe write tests are still outstanding. See `docs/TESTPLAN.md`.
+These tests use mock classes to exercise actual coordinator and button code. Read-only WAGO communication and automatic subscription updates passed in two separate Home Assistant containers, including one installation through HACS as a custom repository. A controlled 75-second loss-of-network test, automatic reconnection, and resumed subscription updates passed with the targeted fix. Both switch and momentary-button write functions were confirmed working in the isolated HA test instance using an operator-approved WAGO BOOL input. This test input controls an office light on rising edges and is not an inert test node. See `docs/TESTPLAN.md`.
 
 ## Problems and contributing
 
