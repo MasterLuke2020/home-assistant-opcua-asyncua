@@ -11,7 +11,7 @@
 
 ### Verification (2026-10-20)
 
-- Offline regression suite: 6/6 passed.
+- Offline regression suite: 9/9 passed after the reconnect fix.
 - Isolated Home Assistant container: started successfully with the custom integration.
 - Real WAGO PLC: OPC UA connection, plausible temperature readout, and automatic subscription updates verified.
 - GitHub Actions: regression tests, Hassfest, and HACS validation passed on `develop`.
@@ -20,6 +20,7 @@
 - Controlled 75-second network isolation on the HACS test container exposed overlapping reconnect attempts, an unhandled background task exception, and a subscription error ("Connection is not open"). Recovery of automatic sensor updates was not yet confirmed.
 - Implemented a targeted reconnect fix on `develop`: background errors are handled, duplicate status-triggered reconnect tasks are coalesced, stale pending reconnects no longer tear down a fresh connection, and reconnect teardown waits for ongoing subscription setup.
 - Expanded offline regression checks to 9 tests; all pass locally.
-- Still pending before first release: retest the controlled connection-loss/recovery scenario with this fix and verify safe writes.
+- Corrected-version field retest on isolated HA instance (2026-10-20): 75-second Docker network isolation, automatically handled temporary network errors, self-reconnection, subscription re-creation, and resumed live WAGO temperature updates all PASS without restarting the container. The prior unhandled background-task exception and post-reconnect subscribe race were not observed in the retest.
+- Still pending before first release: verify safe writes against a dedicated non-actuating BOOL test node; complete final release review.
 
 **Note:** No release or version bump has been published. Keep manifest version `1.0.3` until the remaining release checks are completed; a patch version can then be assigned.

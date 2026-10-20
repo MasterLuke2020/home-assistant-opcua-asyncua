@@ -26,7 +26,7 @@ Do not copy files into the production Home Assistant container and do not restar
 - Read-only WAGO PLC temperature: PASS (plausible value)
 - Automatic subscription updates from WAGO: PASS (observed without manual refresh)
 - GitHub Actions: regression tests, Hassfest, and HACS validation: PASS on `develop`
-- Controlled connection interruption/reconnection: INITIAL TEST EXPOSED A BUG (network-down exceptions handled inconsistently; overlapping reconnects disrupted subscription re-registration). Targeted fix prepared on `develop`; full recovery retest still pending.
+- Controlled connection interruption/reconnection: PASS after targeted fix `0106815` in the first isolated HA test container (port 8124). Docker network disconnected for 75 seconds, restored without a container restart. Temporary network-unreachable errors were handled; the OPC UA subscription was re-created and the temperature resumed updating automatically. No unhandled background-task exception or post-recovery subscribe failure was observed in this retest. The original HACS-installed test container (port 8125) was not modified.
 - Safe non-actuating PLC write test: NOT YET TESTED
 - Installation through HACS custom repository: PASS (isolated HA instance on port 8125; manifest version 1.0.3; live WAGO temperature and subscription updates)
 - Observation: HACS initially failed to fetch a zipball, fell back to individual files, then completed the installation

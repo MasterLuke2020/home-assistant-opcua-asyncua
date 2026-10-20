@@ -2,7 +2,7 @@
 
 Custom integration for connecting Home Assistant to OPC UA compatible PLCs, originally developed and tested with a WAGO PLC.
 
-> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery and safe writes remain unverified. **Do not replace a working production integration with this development build.**
+> **Pre-release development build.** The public GitHub repository passes automated validation. Both a manually staged Home Assistant instance and a separate HACS-installed instance successfully read a plausible temperature value from a WAGO PLC and received automatic OPC UA subscription updates. Controlled connection-loss/recovery has also passed after a targeted reconnect fix; safe writes remain unverified. **Do not replace a working production integration with this development build.**
 
 ## Existing features (unchanged)
 
@@ -13,7 +13,7 @@ Custom integration for connecting Home Assistant to OPC UA compatible PLCs, orig
 - Fallback polling, keepalive, and connection recovery
 - YAML-based configuration; no UI config flow
 
-No features have been added in this preparation. The test candidate includes three narrowly scoped bug fixes described in `CHANGELOG.md`.
+No features have been added in this preparation. The test candidate includes narrowly scoped bug fixes and a targeted reconnect stabilization described in `CHANGELOG.md`.
 
 ## Requirements
 
@@ -24,9 +24,9 @@ No features have been added in this preparation. The test candidate includes thr
 
 No specific minimum Home Assistant version is claimed until the HA runtime tests have passed.
 
-## Installation (after the first tagged GitHub release)
+## Installation
 
-**Via HACS (after release and test):** Open HACS, add `https://github.com/MasterLuke2020/home-assistant-opcua-asyncua` as a **custom repository** of category **Integration**, install **AsyncUA OPC-UA**, and restart Home Assistant. Inclusion in the default HACS catalog requires a separate submission and approval.
+**Via HACS (custom repository):** Open HACS, add `https://github.com/MasterLuke2020/home-assistant-opcua-asyncua` as a **custom repository** of category **Integration**, install **AsyncUA OPC-UA**, and restart Home Assistant. Inclusion in the default HACS catalog requires a separate submission and approval.
 
 **Manually:** Copy `custom_components/asyncua/` to `<HA_CONFIG>/custom_components/asyncua/` and restart Home Assistant.
 
@@ -98,7 +98,7 @@ python -m pip install pytest
 python -m pytest tests -q
 ```
 
-These tests use mock classes to exercise actual coordinator and button code. Read-only WAGO communication and automatic subscription updates passed in two separate Home Assistant containers, including one installation through HACS as a custom repository. Controlled reconnect and safe write tests are still outstanding. See `docs/TESTPLAN.md`.
+These tests use mock classes to exercise actual coordinator and button code. Read-only WAGO communication and automatic subscription updates passed in two separate Home Assistant containers, including one installation through HACS as a custom repository. A controlled 75-second loss-of-network test, automatic reconnection, and resumed subscription updates passed with the targeted fix. Safe write tests are still outstanding. See `docs/TESTPLAN.md`.
 
 ## Problems and contributing
 

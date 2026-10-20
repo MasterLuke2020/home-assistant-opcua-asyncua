@@ -10,7 +10,7 @@
 ## Runtime verification
 - [x] Start completely separate HA Docker container with its own writable config and port
 - [x] Verify startup, initial real PLC temperature value, and automatic subscription updates
-- [ ] Verify reconnect after controlled, production-safe link interruption (first test exposed race; fix on `develop`, retest required)
+- [x] Verify reconnect after 75-second container-only network interruption: automatic reconnection, subscription re-creation, and live sensor updates resumed with fix `0106815`
 - [ ] Test safe non-actuating BOOL variable if write tests are required
 - [ ] Confirm no logger errors or entity registry conflicts
 - [x] Verify HACS installation into a separate HA test container with live read-only WAGO temperature and subscription updates
@@ -25,4 +25,4 @@
 - [ ] Tag and publish a full GitHub Release (not only a tag)
 - [ ] Submit default repository PR to `hacs/default` only after checks pass
 
-**As of 2026-10-20: the repository is public, HACS installation and live read-only PLC subscription checks passed in an isolated test container; no production deployment or GitHub Release has been performed.**
+**As of 2026-10-20: HACS installation, live WAGO subscription updates, and the corrected-version container-only network-recovery test passed. Safe write testing and release approval are pending; no production deployment or GitHub Release has been performed.**
