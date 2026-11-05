@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — documentation only (2026-11-05)
+
+- Updated the installation instructions following inclusion in the default HACS integration catalog ([hacs/default#12310](https://github.com/hacs/default/pull/12310), merged 2026-11-04).
+- Updated release and test documentation to reflect the published v1.0.4 release and completed production smoke test.
+- No changes to the integration's Python code, dependencies, domain, or manifest version.
+
 ## 1.0.4 — 2026-10-20
 
 - Repackaged the existing integration into a HACS-compatible repository layout; no functionality added.
@@ -22,6 +28,6 @@
 - Expanded offline regression checks to 9 tests; all pass locally.
 - Corrected-version field retest on isolated HA instance (2026-10-20): 75-second Docker network isolation, automatically handled temporary network errors, self-reconnection, subscription re-creation, and resumed live WAGO temperature updates all PASS without restarting the container. The prior unhandled background-task exception and post-reconnect subscribe race were not observed in the retest.
 - Live write verification (2026-10-20): operator confirmed both switch TRUE/FALSE and 500-ms button behavior worked against explicitly approved edge-triggered WAGO office-light input using isolated HA test port 8124. This was a real control input, not an inert test variable. The private PLC node identifier is intentionally omitted from public documentation.
-- Still pending before first release: final review of repository contents, release version and metadata, and approval.
+- Release v1.0.4 was published on 2026-10-20. Subsequent HACS catalog approval is recorded under the Unreleased documentation notes above.
 
 **Upgrade note:** Back up the current `asyncua` installation and YAML configuration before upgrading an existing production setup. Test the new version in a separate Home Assistant instance first.

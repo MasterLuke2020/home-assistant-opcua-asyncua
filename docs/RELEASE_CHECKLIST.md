@@ -1,4 +1,4 @@
-# Release checklist — pre-release / approval pending
+# Release checklist — v1.0.4 published / HACS catalog approved
 
 ## Repository and licensing
 - [x] Public repository: `MasterLuke2020/home-assistant-opcua-asyncua`
@@ -22,7 +22,8 @@
 - [x] Resolve HACS/Hassfest validation errors
 - [x] Add local integration icon at `custom_components/asyncua/brand/icon.png`
 - [x] Bump manifest to `1.0.4`, update changelog, and pass validation on `develop` and `main` (pre-release commit)
-- [ ] Tag and publish a full GitHub Release (not only a tag)
-- [ ] Submit default repository PR to `hacs/default` only after checks pass
+- [x] Published full GitHub Release [v1.0.4](https://github.com/MasterLuke2020/home-assistant-opcua-asyncua/releases/tag/v1.0.4) on 2026-10-20
+- [x] Submitted and merged [hacs/default#12310](https://github.com/hacs/default/pull/12310) into the official HACS catalog on 2026-11-04
+- [x] Completed production upgrade to 1.0.4 and smoke-tested PLC connectivity and entity operation; kept a 1.0.3 rollback backup
 
-**As of 2026-10-20: HACS installation, live WAGO subscription updates, and the corrected-version container-only network-recovery test passed. Final release validation, promotion to `main`, and GitHub Release are pending; no production deployment has been performed.**
+**Status as of 2026-11-05:** v1.0.4 is released, the official HACS catalog PR is merged, and a production upgrade was verified by the operator. The test containers were removed after validation. The outstanding general logger/entity-registry audit item above remains open; it is not a release blocker, and the successful smoke tests are not a guarantee against future faults.

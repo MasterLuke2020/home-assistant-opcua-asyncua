@@ -13,7 +13,7 @@ Custom integration for connecting Home Assistant to OPC UA compatible PLCs, orig
 - Fallback polling, keepalive, and connection recovery
 - YAML-based configuration; no UI config flow
 
-No features have been added in this preparation. The test candidate includes narrowly scoped bug fixes and a targeted reconnect stabilization described in `CHANGELOG.md`.
+Version 1.0.4 focuses on narrowly scoped reliability fixes and reconnect stabilization, as described in `CHANGELOG.md`. No new entity platforms were added.
 
 ## Requirements
 
@@ -26,7 +26,11 @@ Tested with isolated Home Assistant Docker instances using the then-current stab
 
 ## Installation
 
-**Via HACS (custom repository):** Open HACS, add `https://github.com/MasterLuke2020/home-assistant-opcua-asyncua` as a **custom repository** of category **Integration**, install **AsyncUA OPC-UA**, and restart Home Assistant. Inclusion in the default HACS catalog requires a separate submission and approval.
+AsyncUA OPC-UA was accepted into the [default HACS integration catalog](https://github.com/hacs/default/pull/12310) on 2026-11-04. It remains a **custom Home Assistant integration**, not a Home Assistant Core integration.
+
+**Via HACS (recommended):** Open HACS in Home Assistant, search for **AsyncUA OPC-UA**, download/install the integration, and restart Home Assistant. Configure the OPC UA hubs and entities in YAML as described below; there is no UI config flow.
+
+**HACS fallback:** If the integration is not yet visible in your local HACS catalog, refresh/update HACS and search again. You can also add `https://github.com/MasterLuke2020/home-assistant-opcua-asyncua` as a **custom repository** of type **Integration**, then install **AsyncUA OPC-UA** and restart Home Assistant.
 
 **Manually:** Copy `custom_components/asyncua/` to `<HA_CONFIG>/custom_components/asyncua/` and restart Home Assistant.
 
